@@ -17,8 +17,8 @@ export class LoginComponent implements OnInit {
     private userSvc: SampletestService
    ) {
     this.loginForm = this.fb.group({
-      'email': [undefined, Validators.required],
-      'password': [undefined, Validators.required]
+      'email': [null, Validators.compose([Validators.required, Validators.pattern("[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\\b")])],
+      'password': [null,Validators.compose([ Validators.required,Validators.minLength(8)])]
     });
 
     this.loginForm.valueChanges.subscribe(() => {
