@@ -10,5 +10,6 @@ describe('try-testing App', () => {
   it('should display welcome message', () => {
     page.navigateTo();
     expect(page.getParagraphText()).toEqual('Welcome to app!');
+    expect(page.getTestID()).toEqual('Here are some links to help you start:');
   });
 });
