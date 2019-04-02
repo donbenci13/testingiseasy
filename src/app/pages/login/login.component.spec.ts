@@ -54,17 +54,18 @@ describe('LoginComponent', () => {
         password: 'P@ssword123',
       },
       {
-        email: 'test@test.com',
+        email: 'test@test.gov',
         password: 'aaa098@#_BB'
       },
       {
-        email: 'aa098@gmail.com',
-        password: 'test739ef@mailinator.com'
+        email: 'aa098@gmail.net',
+        password: 'test739ef@mailinAtor.com'
       }
     ]
 
     accounts.map(({ email, password }) => {
       loginSubmit(email, password);
+      console.log({ email, isValid: component.formValid })
       expect(component.formValid).toBeTruthy();
     })
   })
@@ -74,28 +75,59 @@ describe('LoginComponent', () => {
     const accounts = [
       {
         email: 'test',
-        password: 'P@ssword123',
       },
       {
-        email: 'test@gmail',
-        password: 'P@ssword123'
+        email: 'test@gmail'
       },
       {
-        email: 'testgmail!',
-        password: 'P@ssword123'
+        email: 'testgmail!'
       },
       {
-        email: 'testgmail!.com',
-        password: 'P@ssword123'
+        email: 'testgmail!.com'
       },
-      
+
     ]
 
-    accounts.map(({ email, password }) => {
-      loginSubmit(email, password);
-      console.log({email,isValid:component.formValid})
+    accounts.map(({ email }) => {
+      loginSubmit(email, "P@ssword123");
+      console.log({ email, isValid: component.formValid })
       expect(component.formValid).toBeFalsy();
     })
+  })
+
+  it("Login Failed due to Invalid Passwords", () => {
+    // atleast 1 numbers
+    // atleast 1 capitals
+    // atleast 1 lower letters
+    // atleast 1 any special character
+    // min 8 characters
+    const accounts = [
+      {
+        password: 'P@sswo1', // less than 8 char
+      },
+      {
+        password: 'P@ssword', // no number
+      },
+      {
+        password: 'Pssword123' // no special char
+      },
+      {
+        password: 'p@ssword123' // no upper case
+      },
+      {
+        password: 'P@SSWORD123' // no small case
+      },
+    ]
+
+    accounts.map(({ password }) => {
+      loginSubmit("test@gmail.com", password);
+      console.log({ password, isValid: component.formValid })
+      expect(component.formValid).toBeFalsy();
+    })
+  })
+
+  it("Successful login will redirect to home page", () => {
+
   })
 
 });
