@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SampletestService } from '../../services/sampletest.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -8,13 +9,14 @@ import { SampletestService } from '../../services/sampletest.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  user 
+  public user 
   loginForm: FormGroup;
   formValid: boolean = false;
 
   constructor(
     private fb: FormBuilder,
-    private userSvc: SampletestService
+    private userSvc: SampletestService,
+    private router : Router
    ) {
     this.loginForm = this.fb.group({
       'email': [null, Validators.compose([Validators.required, Validators.pattern("[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\\b")])],
@@ -28,7 +30,11 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     this.user = this.loginForm.value;
-    return this.userSvc.login(this.user.email, this.user.password);
+    this.redirectToHome()
+  }
+
+  redirectToHome(){
+    this.router.navigate(['home'])
   }
 
   ngOnInit(){
